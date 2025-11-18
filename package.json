@@ -1,0 +1,86 @@
+{
+	"name": "@flit/cdk-bucket-mesh",
+	"version": "0.1.0",
+	"description": "An AWS CDK construct to help setup a multy bucket replication across regions",
+	"keywords": [
+		"aws",
+		"cdk",
+		"awscdk",
+		"aws-cdk",
+		"s3",
+		"bucket"
+	],
+	"homepage": "https://github.com/vierroth/cdk-bucket-mesh",
+	"bugs": "https://github.com/vierroth/cdk-bucket-mesh/issues",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vierroth/cdk-bucket-mesh.git"
+	},
+	"license": "Apache-2.0",
+	"author": {
+		"name": "Vierroth GmbH",
+		"url": "https://github.com/vierroth"
+	},
+	"contributors": [
+		{
+			"name": "Luis Vierroth",
+			"url": "https://github.com/p-mercury"
+		}
+	],
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"./dist",
+		"./src",
+		"./.jsii",
+		"./LICENSE.txt",
+		"./README.md"
+	],
+	"scripts": {
+		"build": "jsii",
+		"prepack": "jsii"
+	},
+	"prettier": {
+		"plugins": [
+			"prettier-plugin-packagejson"
+		],
+		"useTabs": true
+	},
+	"devDependencies": {
+		"@aws-cdk/aws-lambda-go-alpha": "^2.225.0-alpha.0",
+		"@types/node": "^24.10.1",
+		"aws-cdk-lib": "^2.225.0",
+		"constructs": "^10.4.3",
+		"jest": "^30.2.0",
+		"jsii": "^5.9.14",
+		"jsii-pacmak": "^1.119.0",
+		"prettier": "^3.6.2",
+		"prettier-plugin-packagejson": "^2.5.19",
+		"ts-jest": "^29.4.5",
+		"typescript": "^5.9.3"
+	},
+	"peerDependencies": {
+		"aws-cdk-lib": "^2.225.0",
+		"constructs": "^10.4.3"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"jsii": {
+		"outdir": "./dist",
+		"excludeTypescript": [
+			"**/handler.ts"
+		],
+		"tsc": {
+			"rootDir": "./src",
+			"outDir": "./dist"
+		},
+		"targets": {
+			"dotnet": {
+				"namespace": "Flit.CDK.BucketMesh",
+				"packageId": "Flit.CDK.BucketMesh"
+			}
+		}
+	},
+	"stability": "stable"
+}
