@@ -1,6 +1,6 @@
 {
 	"name": "@flit/cdk-bucket-mesh",
-	"version": "0.1.0",
+	"version": "0.1.6",
 	"description": "An AWS CDK construct to help setup a multy bucket replication across regions",
 	"keywords": [
 		"aws",

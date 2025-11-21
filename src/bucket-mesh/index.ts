@@ -1,5 +1,5 @@
 import { Construct } from "constructs";
-import { CustomResource } from "aws-cdk-lib";
+import { CustomResource, Stack } from "aws-cdk-lib";
 import { Bucket } from "aws-cdk-lib/aws-s3";
 import {
 	Effect,
@@ -19,9 +19,12 @@ class BucketMeshResource extends CustomResource {
 	constructor(scope: Construct, id: string, props: BucketMeshResourceProps) {
 		super(scope, id, {
 			resourceType: "Custom::BucketMesh",
-			serviceToken: Provider.getOrCreate(scope, props.buckets),
+			serviceToken: Provider.getOrCreate(scope, props.buckets, props.role),
 			properties: {
-				bucketNames: props.buckets.map(({ bucketName }) => bucketName),
+				buckets: props.buckets.map((b) => ({
+					name: b.bucketName,
+					region: Stack.of(b).region,
+				})),
 				replicationRoleArn: props.role.roleArn,
 			},
 		});
