@@ -78,7 +78,7 @@ func handleRequest(ctx context.Context, event cfn.Event) (cfn.Response, error) {
 					continue
 				}
 
-				ruleID := fmt.Sprintf("replicate-%s-to-%s", srcBucket, dstBucket)
+				ruleID := fmt.Sprintf("replicate-%s-to-%s", srcBucket.name, dstBucket.name)
 
 				rules = append(rules, types.ReplicationRule{
 					ID:       aws.String(ruleID),
@@ -89,6 +89,9 @@ func handleRequest(ctx context.Context, event cfn.Event) (cfn.Response, error) {
 					},
 					Destination: &types.Destination{
 						Bucket: aws.String("arn:aws:s3:::" + dstBucket.name),
+						AccessControlTranslation: &types.AccessControlTranslation{
+							Owner: types.OwnerOverrideDestination,
+						},
 					},
 					DeleteMarkerReplication: &types.DeleteMarkerReplication{
 						Status: types.DeleteMarkerReplicationStatusEnabled,

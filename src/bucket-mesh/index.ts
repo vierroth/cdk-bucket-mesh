@@ -54,6 +54,25 @@ export class BucketMesh extends Construct {
 			}),
 		);
 
+		replicationRole.addToPolicy(
+			new PolicyStatement({
+				effect: Effect.ALLOW,
+				actions: [
+					"s3:GetObjectVersion",
+					"s3:GetObjectVersionAcl",
+					"s3:GetObjectVersionTagging",
+					"s3:GetObjectVersionForReplication",
+					"s3:GetObjectRetention",
+					"s3:GetObjectLegalHold",
+					"s3:ReplicateObject",
+					"s3:ReplicateDelete",
+					"s3:ReplicateTags",
+					"s3:ObjectOwnerOverrideToBucketOwner",
+				],
+				resources: props.buckets.map(({ bucketArn }) => `${bucketArn}/*`),
+			}),
+		);
+
 		new BucketMeshResource(this, "Resource", {
 			buckets: props.buckets,
 			role: replicationRole,
