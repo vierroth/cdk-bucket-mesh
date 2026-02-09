@@ -15,15 +15,16 @@ import (
 )
 
 type Bucket struct {
-	name   string
-	region string
+	name      string
+	region    string
+	accountId string
 }
 
 func handleRequest(ctx context.Context, event cfn.Event) (cfn.Response, error) {
 
-	physicalResourceID := event.PhysicalResourceID
-	if physicalResourceID == "" {
-		physicalResourceID = "BucketMeshReplication"
+	physicalResourceId := event.PhysicalResourceID
+	if physicalResourceId == "" {
+		physicalResourceId = "BucketMeshReplication"
 	}
 
 	replicationRoleArn := event.ResourceProperties["replicationRoleArn"].(string)
@@ -63,7 +64,7 @@ func handleRequest(ctx context.Context, event cfn.Event) (cfn.Response, error) {
 			StackID:            event.StackID,
 			RequestID:          event.RequestID,
 			LogicalResourceID:  event.LogicalResourceID,
-			PhysicalResourceID: physicalResourceID,
+			PhysicalResourceID: physicalResourceId,
 			Data:               map[string]any{},
 		}, nil
 	}
@@ -88,7 +89,8 @@ func handleRequest(ctx context.Context, event cfn.Event) (cfn.Response, error) {
 						Prefix: aws.String(""),
 					},
 					Destination: &types.Destination{
-						Bucket: aws.String("arn:aws:s3:::" + dstBucket.name),
+						Bucket:  aws.String("arn:aws:s3:::" + dstBucket.name),
+						Account: aws.String(dstBucket.accountId),
 						AccessControlTranslation: &types.AccessControlTranslation{
 							Owner: types.OwnerOverrideDestination,
 						},
@@ -131,7 +133,7 @@ func handleRequest(ctx context.Context, event cfn.Event) (cfn.Response, error) {
 			StackID:            event.StackID,
 			RequestID:          event.RequestID,
 			LogicalResourceID:  event.LogicalResourceID,
-			PhysicalResourceID: physicalResourceID,
+			PhysicalResourceID: physicalResourceId,
 			Data:               map[string]any{},
 		}, nil
 
@@ -165,7 +167,7 @@ func handleRequest(ctx context.Context, event cfn.Event) (cfn.Response, error) {
 			StackID:            event.StackID,
 			RequestID:          event.RequestID,
 			LogicalResourceID:  event.LogicalResourceID,
-			PhysicalResourceID: physicalResourceID,
+			PhysicalResourceID: physicalResourceId,
 			Data:               map[string]any{},
 		}, nil
 

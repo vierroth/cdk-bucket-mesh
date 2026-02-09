@@ -24,6 +24,7 @@ class BucketMeshResource extends CustomResource {
 				buckets: props.buckets.map((b) => ({
 					name: b.bucketName,
 					region: Stack.of(b).region,
+					accountId: Stack.of(b).account,
 				})),
 				replicationRoleArn: props.role.roleArn,
 			},
