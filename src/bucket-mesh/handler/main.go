@@ -51,9 +51,15 @@ func handleRequest(ctx context.Context, event cfn.Event) (cfn.Response, error) {
 			return cfn.Response{}, fmt.Errorf("buckets[%d].region is missing or not a string", i)
 		}
 
+		accountId, ok := m["accountId"].(string)
+		if !ok {
+			return cfn.Response{}, fmt.Errorf("buckets[%d].accountId is missing or not a string", i)
+		}
+
 		buckets[i] = Bucket{
-			name:   name,
-			region: region,
+			name:      name,
+			region:    region,
+			accountId: accountId,
 		}
 	}
 
