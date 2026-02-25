@@ -1,7 +1,6 @@
 import { Construct } from "constructs";
 import { Duration, Stack } from "aws-cdk-lib";
 import { Architecture } from "aws-cdk-lib/aws-lambda";
-import { LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
 import {
 	PolicyDocument,
 	PolicyStatement,
@@ -15,9 +14,6 @@ export class LambdaBase extends GoFunction {
 		super(scope, id, {
 			architecture: Architecture.ARM_64,
 			timeout: Duration.minutes(2),
-			logGroup: new LogGroup(scope, `${id}LogGroup`, {
-				retention: RetentionDays.ONE_WEEK,
-			}),
 			role: new LambdaRole(scope, `${id}Role`),
 			bundling: {
 				environment: {
