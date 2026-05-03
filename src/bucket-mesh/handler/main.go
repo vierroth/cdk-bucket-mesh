@@ -152,15 +152,11 @@ func handleRequest(ctx context.Context, event cfn.Event) (cfn.Response, error) {
 
 			S3Client := s3.NewFromConfig(cfg)
 
-			_, err = S3Client.PutBucketReplication(ctx, &s3.PutBucketReplicationInput{
+			_, err = S3Client.DeleteBucketReplication(ctx, &s3.DeleteBucketReplicationInput{
 				Bucket: aws.String(srcBucket.name),
-				ReplicationConfiguration: &types.ReplicationConfiguration{
-					Role:  aws.String(replicationRoleArn),
-					Rules: []types.ReplicationRule{},
-				},
 			})
 			if err != nil {
-				Logger.Error("Failed to clear bucket replication configuration",
+				Logger.Error("Failed to delete bucket replication configuration",
 					slog.String("bucket", srcBucket.name),
 					slog.Any("error", err),
 				)

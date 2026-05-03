@@ -1,6 +1,6 @@
 import { Construct } from "constructs";
 import { Duration, Stack } from "aws-cdk-lib";
-import { Architecture } from "aws-cdk-lib/aws-lambda";
+import { Architecture, Runtime } from "aws-cdk-lib/aws-lambda";
 import {
 	PolicyDocument,
 	PolicyStatement,
@@ -13,6 +13,7 @@ export class LambdaBase extends GoFunction {
 	constructor(scope: Construct, id: string, props: GoFunctionProps) {
 		super(scope, id, {
 			architecture: Architecture.ARM_64,
+			runtime: Runtime.PROVIDED_AL2023,
 			timeout: Duration.minutes(2),
 			role: new LambdaRole(scope, `${id}Role`),
 			bundling: {
