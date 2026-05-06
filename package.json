@@ -1,6 +1,6 @@
 {
 	"name": "@flit/cdk-bucket-mesh",
-	"version": "0.6.0",
+	"version": "0.6.1",
 	"description": "An AWS CDK construct to help setup a multy bucket replication across regions",
 	"keywords": [
 		"aws",
@@ -50,12 +50,12 @@
 		"glob": "^13.0.1"
 	},
 	"devDependencies": {
-		"@aws-cdk/aws-lambda-go-alpha": "2.252.0-alpha.0",
+		"@aws-cdk/aws-lambda-go-alpha": "^2.253.0-alpha.0",
 		"@types/node": "^25.6.0",
-		"aws-cdk-lib": "2.252.0",
-		"constructs": "10.6.0",
+		"aws-cdk-lib": "^2.253.0",
+		"constructs": "^10.6.0",
 		"jest": "^30.3.0",
-		"jsii": "^5.9.37",
+		"jsii": "^5.9.39",
 		"jsii-pacmak": "^1.129.0",
 		"prettier": "^3.8.3",
 		"prettier-plugin-packagejson": "^3.0.2",
@@ -63,8 +63,8 @@
 		"typescript": "^6.0.3"
 	},
 	"peerDependencies": {
-		"@aws-cdk/aws-lambda-go-alpha": "2.252.0-alpha.0",
-		"aws-cdk-lib": "2.252.0",
+		"@aws-cdk/aws-lambda-go-alpha": "2.253.0-alpha.0",
+		"aws-cdk-lib": "2.253.0",
 		"constructs": "10.6.0"
 	},
 	"publishConfig": {
