@@ -1,26 +1,41 @@
 import { Construct } from "constructs";
 import { Duration, Stack } from "aws-cdk-lib";
-import { Architecture, Runtime } from "aws-cdk-lib/aws-lambda";
+import {
+	Runtime,
+	ParamsAndSecretsLayerVersion,
+	ParamsAndSecretsVersions,
+	Architecture,
+} from "aws-cdk-lib/aws-lambda";
+import {
+	NodejsFunction,
+	NodejsFunctionProps,
+} from "aws-cdk-lib/aws-lambda-nodejs";
+import { LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
 import {
 	PolicyDocument,
 	PolicyStatement,
 	Role,
 	ServicePrincipal,
 } from "aws-cdk-lib/aws-iam";
-import { GoFunction, GoFunctionProps } from "@aws-cdk/aws-lambda-go-alpha";
 
-export class LambdaBase extends GoFunction {
-	constructor(scope: Construct, id: string, props: GoFunctionProps) {
+export class LambdaBase extends NodejsFunction {
+	constructor(scope: Construct, id: string, props: NodejsFunctionProps) {
 		super(scope, id, {
+			runtime: Runtime.NODEJS_24_X,
 			architecture: Architecture.ARM_64,
-			runtime: Runtime.PROVIDED_AL2023,
 			timeout: Duration.minutes(2),
-			role: new LambdaRole(scope, `${id}Role`),
+			logGroup: new LogGroup(scope, `${id}LogGroup`, {
+				retention: RetentionDays.ONE_WEEK,
+			}),
+			paramsAndSecrets: ParamsAndSecretsLayerVersion.fromVersion(
+				ParamsAndSecretsVersions.V1_0_103,
+			),
 			bundling: {
-				environment: {
-					GOWORK: "off",
-				},
+				minify: true,
+				sourcesContent: false,
+				externalModules: ["@aws-sdk"],
 			},
+			role: new LambdaRole(scope, `${id}Role`),
 			...props,
 		});
 	}

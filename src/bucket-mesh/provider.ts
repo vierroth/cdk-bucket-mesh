@@ -11,7 +11,7 @@ export class Provider extends AwsProvider {
 	constructor(scope: Construct, id: string) {
 		super(scope, id, {
 			onEventHandler: new LambdaBase(scope, `${id}Handler`, {
-				entry: join(__dirname, "./handler").replace("/dist/", "/src/"),
+				entry: join(__dirname, "./handler.ts").replace("/dist/", "/src/"),
 			}),
 		});
 	}
